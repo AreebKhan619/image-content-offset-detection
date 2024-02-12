@@ -1,12 +1,13 @@
 import express from "express";
 import { IParseImgRequest } from "./types/req";
-import { loadImgFromURI } from "./utils/imgUtils";
+import * as imgUtils from "./utils/imgUtils";
 const app = express();
 const port = 3000;
 
-app.get<IParseImgRequest>("/", (req, res) => {
-  loadImgFromURI(req.params);
-  res.send("Hello World!");
+app.get<IParseImgRequest>("/", async (req, res) => {
+  imgUtils.loadImgFromURI(req.params);
+  const details = await imgUtils.parseImgForEdgeContent();
+  res.json(details);
 });
 
 app.listen(port, () => {
