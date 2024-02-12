@@ -1,8 +1,11 @@
 import express from "express";
+import { IParseImgRequest } from "./types/req";
+import { loadImgFromURI } from "./utils/imgUtils";
 const app = express();
 const port = 3000;
 
-app.get("/", (req, res) => {
+app.get<IParseImgRequest>("/", (req, res) => {
+  loadImgFromURI(req.params);
   res.send("Hello World!");
 });
 
